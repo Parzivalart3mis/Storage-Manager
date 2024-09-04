@@ -2,6 +2,7 @@
 #include "dberror.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 /*
  * ############################
@@ -17,10 +18,39 @@ RC createPageFile(char *fileName) {
     if (file == NULL) {
         printf("New file initiated");
     }
+    // char *pointer = (char *)calloc(PAGE_SIZE, sizeof(char));
+    // if (pointer == NULL) {
+    //     printf("Memory allocation error");
+    // }
+    // else {
+    //     for (int i = 0; i < PAGE_SIZE; i++) {
+    //         fputc('\0', file);
+    //     }
+    //     printf("Memory allocated!");
+    //     return RC_OK;
+    // }
+    for (int i = 0; i < PAGE_SIZE; i++) {
+        fputc('\0', file);
+    }
+    fclose(file);
+
+    /*
+     * To check if file has been written
+     */
+    // FILE *file1 = fopen(fileName, "r");   // "w" creates file if it doesn't exist and truncates the file if it exists
+    // int ch;
+    // while((ch = fgetc(file1)) != EOF) {
+    //     putchar(ch);
+    // }
+    // printf("Memory allocated!\n");
+    // fclose(file1);
     return RC_OK;
+
+
 }
 
 RC openPageFile(char *fileName, SM_FileHandle *fHandle) {
+
     return 0;
 }
 
