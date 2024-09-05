@@ -50,6 +50,27 @@ RC createPageFile(char *fileName) {
 }
 
 RC openPageFile(char *fileName, SM_FileHandle *fHandle) {
+    // Try opening the file in read binary mode
+    FILE *page = fopen(fileName, "rb");
+    if (page == NULL) {
+        printf("Error: File '%s' not found.\n", fileName);
+        return RC_FILE_NOT_FOUND;  // Return "file not found" if open fails
+    }
+
+    // File opened successfully
+    printf("File '%s' opened successfully.\n", fileName);
+    fseek(page, 0, SEEK_END);
+    long fileSize = ftell(page);
+    printf("File size is %ld\n", fileSize);
+    int no_of_pages = fileSize / PAGE_SIZE;
+    printf("Number of pages = %d\n", no_of_pages);
+    fHandle -> curPagePos = 0;
+    fHandle -> fileName = fileName;
+    fHandle -> totalNumPages = no_of_pages;
+
+
+
+    fclose(page);
 
     return 0;
 }
