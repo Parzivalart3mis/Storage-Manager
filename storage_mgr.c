@@ -76,11 +76,11 @@ RC openPageFile(char *fileName, SM_FileHandle *fHandle) {
 }
 
 RC closePageFile(SM_FileHandle *fHandle) {
-    return RC_OK;
+    return 0;
 }
 
 RC destroyPageFile(char *fileName) {
-    return RC_OK;
+    return 0;
 }
 
 /*
