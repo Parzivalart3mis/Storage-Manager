@@ -18,32 +18,10 @@ RC createPageFile(char *fileName) {
     if (file == NULL) {
         printf("New file initiated");
     }
-    // char *pointer = (char *)calloc(PAGE_SIZE, sizeof(char));
-    // if (pointer == NULL) {
-    //     printf("Memory allocation error");
-    // }
-    // else {
-    //     for (int i = 0; i < PAGE_SIZE; i++) {
-    //         fputc('\0', file);
-    //     }
-    //     printf("Memory allocated!");
-    //     return RC_OK;
-    // }
     for (int i = 0; i < PAGE_SIZE; i++) {
         fputc('\0', file);
     }
     fclose(file);
-
-    /*
-     * To check if file has been written
-     */
-    // FILE *file1 = fopen(fileName, "r");   // "w" creates file if it doesn't exist and truncates the file if it exists
-    // int ch;
-    // while((ch = fgetc(file1)) != EOF) {
-    //     putchar(ch);
-    // }
-    // printf("Memory allocated!\n");
-    // fclose(file1);
     return RC_OK;
 
 
@@ -76,11 +54,37 @@ RC openPageFile(char *fileName, SM_FileHandle *fHandle) {
 }
 
 RC closePageFile(SM_FileHandle *fHandle) {
-    return 0;
+    printf("Inside closePageFile()\n");
+
+    // Check if SM_FileHandle -> fileName is not empty to validate that file was opened.
+
+    if(fHandle -> fileName == NULL) {
+        printf("Error: File '%s' not found.\n", fHandle -> fileName);
+    }
+
+    // Open file before closing it :/
+    // mode = 'rb' and not 'r' because the file is a .bin file
+    // 'r' is used to read text files, 'rb' for rest of the files.
+
+    FILE *file = fopen(fHandle -> fileName, "rb");
+    if(file == NULL) {
+        return RC_FILE_NOT_FOUND;
+    }
+    if(fclose(file) !=0 ) {
+        RC_message = "Error closing file";
+        return RC_message;
+    }
+    return RC_OK;
 }
 
 RC destroyPageFile(char *fileName) {
-    return 0;
+    printf("Deleting file '%s'\n", fileName);
+    // if (remove(fileName) != 0) {
+    //     // RC_message = "Error deleting file";
+    //     return RC_FILE_NOT_FOUND;
+    // }
+    remove(fileName);
+    return RC_OK;
 }
 
 /*
