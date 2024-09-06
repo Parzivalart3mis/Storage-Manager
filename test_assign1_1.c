@@ -26,8 +26,8 @@ main (void)
   initStorageManager();
   //
   testCreateOpenClose();
-  // testSinglePageContent();
-  printf("PAGE_SIZE: %d",PAGE_SIZE);
+  testSinglePageContent();
+  // printf("PAGE_SIZE: %d",PAGE_SIZE);
 
   return 0;
 }
