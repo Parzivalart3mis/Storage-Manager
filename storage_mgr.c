@@ -56,31 +56,30 @@ RC openPageFile(char *fileName, SM_FileHandle *fHandle) {
         printf("Error: File '%s' not found.\n", fileName);
         return RC_FILE_NOT_FOUND;  // Return "file not found" if open fails
     }
-
-    // File opened successfully
-    printf("File '%s' opened successfully.\n", fileName);
-    fseek(page, 0, SEEK_END);
-    long fileSize = ftell(page);
-    printf("File size is %ld\n", fileSize);
-    int no_of_pages = fileSize / PAGE_SIZE;
-    printf("Number of pages = %d\n", no_of_pages);
-    fHandle -> fileName = fileName;
-    fHandle -> curPagePos = 0;
-    fHandle -> totalNumPages = no_of_pages;
-    fHandle ->mgmtInfo = page;
-    // printf("Current filename is %s\n", fHandle -> fileName);
-    // printf("Current curPagePos is %d\n", fHandle -> curPagePos);
-    // printf("Current totalNumPages is %d\n", fHandle -> totalNumPages);
-    return RC_OK;
+    else {
+        // File opened successfully
+        // printf("File '%s' opened successfully.\n", fileName);
+        fseek(page, 0, SEEK_END);
+        long fileSize = ftell(page);
+        // printf("File size is %ld\n", fileSize);
+        int no_of_pages = fileSize / PAGE_SIZE;
+        // printf("Number of pages = %d\n", no_of_pages);
+        fHandle -> fileName = fileName;
+        fHandle -> curPagePos = 0;
+        fHandle -> totalNumPages = no_of_pages;
+        fHandle ->mgmtInfo = page;
+        // printf("Current filename is %s\n", fHandle -> fileName);
+        // printf("Current curPagePos is %d\n", fHandle -> curPagePos);
+        // printf("Current totalNumPages is %d\n", fHandle -> totalNumPages);
+        return RC_OK;
+    }
 }
 
 RC closePageFile(SM_FileHandle *fHandle) {
-    fclose(fHandle -> mgmtInfo);
     return RC_OK;
 }
 
 RC destroyPageFile(char *fileName) {
-    remove(fileName);
     return RC_OK;
 }
 
