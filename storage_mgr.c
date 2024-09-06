@@ -64,23 +64,24 @@ RC openPageFile(char *fileName, SM_FileHandle *fHandle) {
     printf("File size is %ld\n", fileSize);
     int no_of_pages = fileSize / PAGE_SIZE;
     printf("Number of pages = %d\n", no_of_pages);
-    fHandle -> curPagePos = 0;
     fHandle -> fileName = fileName;
+    fHandle -> curPagePos = 0;
     fHandle -> totalNumPages = no_of_pages;
-
-
-
-    fclose(page);
-
-    return 0;
+    fHandle ->mgmtInfo = page;
+    // printf("Current filename is %s\n", fHandle -> fileName);
+    // printf("Current curPagePos is %d\n", fHandle -> curPagePos);
+    // printf("Current totalNumPages is %d\n", fHandle -> totalNumPages);
+    return RC_OK;
 }
 
 RC closePageFile(SM_FileHandle *fHandle) {
-    return 0;
+    fclose(fHandle -> mgmtInfo);
+    return RC_OK;
 }
 
 RC destroyPageFile(char *fileName) {
-    return 0;
+    remove(fileName);
+    return RC_OK;
 }
 
 /*
