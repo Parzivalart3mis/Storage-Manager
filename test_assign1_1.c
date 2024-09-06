@@ -18,7 +18,8 @@ static void testCreateOpenClose(void);
 static void testSinglePageContent(void);
 
 /* main function running all tests */
-int main (void)
+int
+main (void)
 {
   testName = "";
 
